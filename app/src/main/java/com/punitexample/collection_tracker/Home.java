@@ -3,28 +3,55 @@ package com.punitexample.collection_tracker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.firebase.auth.FirebaseAuth;
+
 
 public class Home extends AppCompatActivity {
-    Button logOut;
-    FirebaseAuth auth;
-    GoogleSignInClient mGoogleSignInClient;
+
+
+
+    Button settings,scan,add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        logOut = (Button) findViewById(R.id.logOut);
-        logOut.setOnClickListener(new View.OnClickListener() {
+        add = (Button) findViewById(R.id.add);
+        scan = (Button) findViewById(R.id.scan);
+        settings = (Button) findViewById(R.id.settings);
+
+
+
+
+        settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.logout();
-                startActivity(new Intent(Home.this, MainActivity.class));
+                startActivity(new Intent(Home.this,Settings.class));
+            }
+        });
+
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Home.this,GenerateQR.class));
+            }
+        });
+
+
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Home.this, ScanQRCode.class));
             }
         });
     }

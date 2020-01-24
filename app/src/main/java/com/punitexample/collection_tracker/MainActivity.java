@@ -78,12 +78,14 @@ public class MainActivity extends AppCompatActivity {
         user = auth.getCurrentUser();
         if(user != null){
             startActivity(new Intent(MainActivity.this,Home.class));
+            finish();
         }
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this,SignUp.class));
+                finish();
             }
         });
 
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else{
                                 startActivity(new Intent(MainActivity.this,Home.class));
+                                finish();
                             }
                         }
                     });
@@ -151,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                         FirebaseUser user = auth.getCurrentUser();
 
                         startActivity(new Intent(MainActivity.this,Home.class));
+                        finish();
 
                     } else {
                         Log.w("TAG", "signInWithCredential:failure", task.getException());
