@@ -2,13 +2,19 @@ package com.punitexample.collection_tracker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +34,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class MainActivity extends AppCompatActivity {
 
     Button LoginWithGoogle;
-    EditText email;
-    EditText pwd;
+    ProgressBar progressBar;
+    EditText email,pwd;
     Button login;
     FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -47,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         signup = (TextView) findViewById(R.id.signup);
         LoginWithGoogle = (Button) findViewById(R.id.lg);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    40); }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
+                    50); }
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -93,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 String em = email.getText().toString();
                 String pd = pwd.getText().toString();
                 if(em.isEmpty()) {
@@ -114,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Not Successfull!", Toast.LENGTH_SHORT).show();
                             }
                             else{
+                                progressBar.setVisibility(View.INVISIBLE);
                                 startActivity(new Intent(MainActivity.this,Home.class));
                                 finish();
                             }
@@ -132,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 101) {
+            progressBar.setVisibility(View.VISIBLE);
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
@@ -152,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("TAG", "signInWithCredential:success");
 
                         FirebaseUser user = auth.getCurrentUser();
-
+                        progressBar.setVisibility(View.INVISIBLE);
                         startActivity(new Intent(MainActivity.this,Home.class));
                         finish();
 
@@ -164,9 +182,28 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+   @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //finish();
+
+        /*Intent intent = new Intent(getApplicationContext(), Home.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);*/
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory( Intent.CATEGORY_HOME );
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
+        //finish();
+
+    }
+
+
     public static void logout(){
         FirebaseAuth.getInstance().signOut();
         mGoogleSignInClient.signOut();
         user = null;
     }
+
+
 }

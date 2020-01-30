@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +23,14 @@ public class SignUp extends AppCompatActivity {
     EditText cpwd;
     Button submit;
     FirebaseAuth auth;
+    ProgressBar progressBar;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        startActivity(new Intent(SignUp.this,MainActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +41,15 @@ public class SignUp extends AppCompatActivity {
         pwd = (EditText) findViewById(R.id.pwd);
         cpwd = (EditText) findViewById(R.id.cpwd);
         submit = (Button) findViewById(R.id.submit_btn);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
         auth = FirebaseAuth.getInstance();
+
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 String em = email.getText().toString();
                 String pd = pwd.getText().toString();
                 String cpd = cpwd.getText().toString();
@@ -67,6 +80,7 @@ public class SignUp extends AppCompatActivity {
                                 Toast.makeText(SignUp.this, "Not Successfull!", Toast.LENGTH_SHORT).show();
                             }
                             else{
+                                progressBar.setVisibility(View.INVISIBLE);
                                 Toast.makeText(SignUp.this, "Successfull", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignUp.this,Home.class));
                                 finish();

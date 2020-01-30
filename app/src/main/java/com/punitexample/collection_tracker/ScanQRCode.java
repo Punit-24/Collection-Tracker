@@ -18,11 +18,13 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanQRCode extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     ZXingScannerView scanner;
+    Entity entity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         scanner = new ZXingScannerView(this);
         setContentView(scanner);
+        entity = new Entity();
     }
 
     @Override
@@ -41,15 +43,27 @@ public class ScanQRCode extends AppCompatActivity implements ZXingScannerView.Re
                     50); }
         scanner.startCamera();
     }
+
+   /* @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Entity.homeIntent = true;
+    }*/
+
     @Override
     public void handleResult(Result result) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        Entity.serial_num = result.getText();
+        Entity.intent = false;
+        entity.items();
+        onBackPressed();
+
+
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan Result");
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Entity.result.setText(result.getText());
-                startActivity(new Intent(ScanQRCode.this,Entity.class));
+
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -60,6 +74,6 @@ public class ScanQRCode extends AppCompatActivity implements ZXingScannerView.Re
         });
 
         AlertDialog alert = builder.create();
-        alert.show();
+        alert.show();*/
     }
 }

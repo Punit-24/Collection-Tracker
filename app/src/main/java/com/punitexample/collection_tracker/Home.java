@@ -18,8 +18,8 @@ import android.widget.TextView;
 public class Home extends AppCompatActivity {
 
 
-
     Button settings,scan,add;
+    static boolean finish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,10 @@ public class Home extends AppCompatActivity {
         add = (Button) findViewById(R.id.add);
         scan = (Button) findViewById(R.id.scan);
         settings = (Button) findViewById(R.id.settings);
+
+        if(finish){
+            finish();
+        }
 
 
 
@@ -43,7 +47,7 @@ public class Home extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Home.this,GenerateQR.class));
+                startActivity(new Intent(Home.this,Add.class));
             }
         });
 
@@ -51,9 +55,11 @@ public class Home extends AppCompatActivity {
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Home.this, ScanQRCode.class));
+                Entity.intent = true;
+                startActivity(new Intent(Home.this, Entity.class));
             }
         });
     }
+
 }
 
