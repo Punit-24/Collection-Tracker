@@ -4,40 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/signupp"
     tools:context=".SignUp">
 
     <EditText
         android:id="@+id/email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="156dp"
+        android:layout_width="293dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="228dp"
+        android:background="@drawable/edittext"
         android:ems="10"
-        android:hint="Email-Id"
+        android:fontFamily="@font/msreferencesansserif"
+        android:hint="Email"
         android:inputType="textEmailAddress"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/pwd"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_width="293dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/edittext"
         android:ems="10"
+        android:fontFamily="@font/msreferencesansserif"
         android:hint="Password"
         android:inputType="textPassword"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <EditText
         android:id="@+id/cpwd"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
+        android:layout_width="293dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/edittext"
         android:ems="10"
+        android:fontFamily="@font/msreferencesansserif"
         android:hint="Confirm Password"
         android:inputType="textPassword"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pwd" />
@@ -48,10 +58,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="167dp"
         android:layout_marginEnd="167dp"
-        android:layout_marginBottom="182dp"
+        android:layout_marginBottom="144dp"
+        android:background="@drawable/button"
+        android:fontFamily="@font/msreferencesansserif"
         android:text="Submit"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
